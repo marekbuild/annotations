@@ -31,7 +31,7 @@ go run service.go
 ```bash
 curl -XPOST "localhost:8080/v1/example/echo" -H "content-type: text/json" -d "{}"
 ```
-```json
+```bash
 # Output
 {"status":"healthy"}
 ```
