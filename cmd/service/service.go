@@ -16,29 +16,36 @@ import (
 )
 
 const (
-	grpcAddr = "127.0.0.1:9090"
 	httpAddr = "127.0.0.1:8080"
+	grpcAddr = "127.0.0.1:9090"
 )
 
 func main() {
 	log.Printf("Starting service")
 
+	// Use an error group to detect if either service
+	// fails or stops.
 	g := &errgroup.Group{}
 
+	// Start http in background
 	log.Printf("Listening http on: %v", httpAddr)
 	httpSrv, err := runHTTP(g)
 	dieOnError(err, "serve http failed")
 
+	// Start grpc in background
 	log.Printf("Listening grpc on: %v", grpcAddr)
 	grpcSrv, err := runGRPC(g)
 	dieOnError(err, "serve grpc failed")
 
+	// Wait for serving to finish or error
 	err = g.Wait()
 	dieOnError(err, "service failed")
 
+	// Shutdown http
 	err = httpSrv.Shutdown(context.Background())
 	dieOnError(err, "shutdown http failed")
 
+	// Shutdown grpc
 	grpcSrv.Stop()
 }
 
@@ -77,5 +84,5 @@ type service struct {
 }
 
 func (s *service) Health(ctx context.Context, req *taskmanagementv1.HealthRequest) (*taskmanagementv1.HealthResponse, error) {
-	return &taskmanagementv1.HealthResponse{}, nil
+	return &taskmanagementv1.HealthResponse{Status: "healthy"}, nil
 }
