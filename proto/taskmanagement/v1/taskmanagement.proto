@@ -1,0 +1,17 @@
+syntax = "proto3";
+package taskmanagement.v1;
+
+option go_package = "github.com/marekbuild/annotations/gen";
+import "google/api/annotations.proto";
+
+service TaskManagementService {
+    rpc Health(HealthRequest) returns (HealthResponse) {
+        option (google.api.http) = {
+            post: "/v1/example/echo"
+            body: "*"
+        };
+    }
+}
+
+message HealthRequest {}
+message HealthResponse {}
