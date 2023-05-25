@@ -29,7 +29,7 @@ go run service.go
 
 ## Call the service
 ```bash
-curl -XPOST "localhost:8080/v1/example/echo" -H "content-type: text/json" -d "{}"
+curl -XPOST "localhost:8080/v1/example/echo" -H "content-type: application/json" -d "{}"
 ```
 ```bash
 # Output
