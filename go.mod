@@ -4,6 +4,7 @@ go 1.20
 
 require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.15.2
+	golang.org/x/sync v0.2.0
 	google.golang.org/grpc v1.53.0
 	google.golang.org/protobuf v1.28.1
 )
