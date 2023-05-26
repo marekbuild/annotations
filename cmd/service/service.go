@@ -43,7 +43,9 @@ func main() {
 
 	// Shutdown http
 	err = httpSrv.Shutdown(context.Background())
-	dieOnError(err, "shutdown http failed")
+	if err != http.ErrServerClosed {
+		dieOnError(err, "shutdown http failed")
+	}
 
 	// Shutdown grpc
 	grpcSrv.Stop()
